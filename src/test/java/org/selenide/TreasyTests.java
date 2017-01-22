@@ -1,9 +1,5 @@
 package org.selenide;
 
-import org.testng.annotations.Test;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-
 import static com.codeborne.selenide.Condition.disappears;
 import static com.codeborne.selenide.Configuration.startMaximized;
 import static com.codeborne.selenide.Selectors.byText;
@@ -11,6 +7,10 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.Selenide.switchTo;
 import static com.codeborne.selenide.WebDriverRunner.closeWebDriver;
+
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 
 /**
