@@ -4,7 +4,6 @@ import com.codeborne.selenide.Configuration;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openqa.selenium.Keys;
 
 import static com.codeborne.selenide.Condition.disappears;
 import static com.codeborne.selenide.Condition.exist;
@@ -42,27 +41,26 @@ public class TreasyTests_junit {
         // Act
         inputEmailAddress();
         openActivationEmail();
-        openConfirmationLink();;
+        openConfirmationLink();
 
         // Assert
         $(byText("Congratulations, you have successfully registered to Treasy.")).should(exist);
     }
 
     private void openConfirmationLink() {
-        $("a[rel=\"noreferrer\"]").click();
-        switchTo().defaultContent(); // Switch to default window
+        $(byText("https://treasy-tst.eu-gb.")).click();
+        switchTo().window(0);
         sleep(10000);
     }
 
     private void openActivationEmail() {
-        $("body").sendKeys(Keys.CONTROL + "t"); // Open empty tab
-        open("treasy.uitest@gmail.com");
+        executeJavaScript("window.open('https://mail.google.com');");
+        switchTo().window(1);
         $("#Email").val("treasy.uitest@gmail.com").pressEnter();
         $("#Passwd").val("N3cqNkjF6RvN");
         $("#signIn").click();
         $(".error-msg").waitUntil(disappears, 2000);
-        $(byText("One more click to Treasy!")).click();
-        $("body").sendKeys(Keys.CONTROL + "\t"); // Switch to previous tab
+        $(byText("TST: One more click to Treasy!")).click();
     }
 
     private void inputEmailAddress() {

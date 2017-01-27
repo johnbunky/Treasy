@@ -1,8 +1,6 @@
 package org.selenide;
 
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.chrome.*;
-import com.codeborne.selenide.Configuration;
 import  org.testng.annotations.*;
 import static com.codeborne.selenide.Condition.disappears;
 import static com.codeborne.selenide.Condition.exist;
@@ -22,7 +20,6 @@ public class TreasyTests {
     @BeforeClass
     public static void openInbox() {
         startMaximized = false;
-        //Configuration.browser = "chrome";
     }
 
     @AfterClass
@@ -39,7 +36,7 @@ public class TreasyTests {
         // Act
         inputEmailAddress();
         openActivationEmail();
-        openConfirmationLink();;
+        openConfirmationLink();
 
         // Assert
         $(byText("Congratulations, you have successfully registered to Treasy.")).should(exist);
@@ -58,7 +55,7 @@ public class TreasyTests {
         $("#Passwd").val("N3cqNkjF6RvN");
         $("#signIn").click();
         $(".error-msg").waitUntil(disappears, 2000);
-        $(byText("One more click to Treasy!")).click();
+        $(byText("TST: One more click to Treasy!")).click();
         $("body").sendKeys(Keys.CONTROL + "\t"); // Switch to previous tab
     }
 
