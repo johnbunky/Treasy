@@ -3,13 +3,10 @@ package org.selenide;
 import org.junit.*;
 import org.openqa.selenium.By;
 
-import static com.codeborne.selenide.Condition.disappears;
-import static com.codeborne.selenide.Condition.exist;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Configuration.*;
-import static com.codeborne.selenide.Selectors.byText;
+import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.WebDriverRunner.closeWebDriver;
 
 /**
@@ -17,7 +14,7 @@ import static com.codeborne.selenide.WebDriverRunner.closeWebDriver;
  */
 public class TreasyTest {
 
-    private String BASE_URL = "https://treasy-tst.eu-gb.mybluemix.net";
+    public static String BASE_URL = "https://treasy-tst.eu-gb.mybluemix.net";
 
     @BeforeClass
     public static void openInbox() {
@@ -26,8 +23,8 @@ public class TreasyTest {
         holdBrowserOpen = true;
     }
 
-    @AfterClass
-    public static void logout() {
+    @After
+    public void logout() {
         closeWebDriver();
     }
 
@@ -49,11 +46,12 @@ public class TreasyTest {
     @Test
     public void checkSettingsListAnimalType() {
 
+        // Arrange
         open(BASE_URL + "/#/welcome");
-        $(By.xpath(".//*[@id='menu']")).click();
-        $(byText("Settings")).click();
-        sleep(2000);
-        $(byText("List animal types")).click();
+
+        // Act
+        openSettingPage();
+        openListAnimalType();
 
         // Assert
         $(byText("Piglet")).should(exist);
@@ -63,10 +61,40 @@ public class TreasyTest {
         $(byText("Boar")).should(exist);
     }
 
+    @Test
+    public void  checkDeletingFromListAnimalType(){
+
+        // Arrange
+        open(BASE_URL + "/#/welcome");
+
+        // Act
+        openSettingPage();
+        openListAnimalType();
+        deletItem();
+
+        // Assert
+        $(byText("Boar")).should(not(visible));
+    }
+
+    private void deletItem() {
+        $(byText("Boar")).$(By.xpath("//*[@class='deleteItem']")).click();
+        openListAnimalType();
+    }
+
+    private void openListAnimalType() {
+        $(byText("List animal types")).click();
+    }
+
+    private void openSettingPage() {
+        $(By.xpath("//*[@id='menu']")).click();
+        $(byText("Settings")).click();
+        sleep(2000);
+    }
+
     private void openConfirmationLink() {
         $(byText("https://treasy-tst.eu-gb.")).click();
         switchTo().window(0);
-        sleep(50000);
+        sleep(60000);
     }
 
     private void openActivationEmail() {
