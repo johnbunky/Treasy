@@ -17,7 +17,7 @@ public class TreasyTest {
     public static String BASE_URL = "https://treasy-tst.eu-gb.mybluemix.net";
 
     @BeforeClass
-    public static void openInbox() {
+    public static void setup() {
         startMaximized = false;
         browser = "chrome";
         holdBrowserOpen = true;
@@ -29,7 +29,7 @@ public class TreasyTest {
     }
 
     @Before
-    public void registerWithActivationEmailAndConfirmationLink() {
+    public  void registration(){
 
         // Arrange
         open(BASE_URL);
@@ -38,6 +38,10 @@ public class TreasyTest {
         inputEmailAddress();
         openActivationEmail();
         openConfirmationLink();
+    }
+
+    @Test
+    public void registerWithActivationEmailAndConfirmationLink() {
 
         // Assert
         $(byText("Congratulations, you have successfully registered to Treasy.")).should(exist);
@@ -58,7 +62,6 @@ public class TreasyTest {
         $(byText("Weaner")).should(exist);
         $(byText("Porker")).should(exist);
         $(byText("Sow")).should(exist);
-        $(byText("Boar")).should(exist);
     }
 
     @Test
@@ -70,10 +73,21 @@ public class TreasyTest {
         // Act
         openSettingPage();
         openListAnimalType();
+        checkItemExist();
         deletItem();
 
         // Assert
         $(byText("Boar")).should(not(visible));
+    }
+
+    private void checkItemExist(){
+        if(!$(byText("Boar")).exists()){
+            refresh();
+            $(byText("Register animal type")).click();
+            $(By.xpath("//*[@class='down']")).click();
+            $(byText("Boar")).click();
+            $(byText("Save")).click();
+        }
     }
 
     private void deletItem() {
