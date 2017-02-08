@@ -1,6 +1,3 @@
 /target/
 /test-output/
 /build/
-.idea
-.gitignore
-pom.xml

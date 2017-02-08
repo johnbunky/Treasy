@@ -1,9 +1,6 @@
 package org.selenide;
 
-import static com.codeborne.selenide.Condition.disappears;
-import static com.codeborne.selenide.Condition.exist;
-import static com.codeborne.selenide.Condition.not;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Configuration.browser;
 import static com.codeborne.selenide.Configuration.holdBrowserOpen;
 import static com.codeborne.selenide.Configuration.startMaximized;
@@ -12,7 +9,6 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.executeJavaScript;
 import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.Selenide.refresh;
-import static com.codeborne.selenide.Selenide.sleep;
 import static com.codeborne.selenide.Selenide.switchTo;
 import static com.codeborne.selenide.WebDriverRunner.closeWebDriver;
 
@@ -27,11 +23,7 @@ import org.openqa.selenium.By;
  */
 public class TreasyTest {
 
-    private static final long FIVE_SECONDS = 5000;
-
-   private static final long TWO_SECONDS = 2000;
-
-    public static String BASE_URL = "https://treasy-tst.eu-gb.mybluemix.net";
+    private static String BASE_URL = "https://treasy-tst.eu-gb.mybluemix.net";
 
     @BeforeClass
     public static void setup() {
@@ -50,9 +42,6 @@ public class TreasyTest {
 
         // Arrange
         open(BASE_URL);
-        
-        // Wait for UI to load the dynamic parts
-        sleep(FIVE_SECONDS);
 
         // Act
         inputEmailAddress();
@@ -64,33 +53,40 @@ public class TreasyTest {
     public void registerWithActivationEmailAndConfirmationLink() {
 
         // Assert
-       switchTo().window("qikCloud - Treasy");
         $(byText("Anmeldung erfolgreich")).should(exist);
     }
 
     @Test
     public void checkSettingsListAnimalType() {
 
-       switchTo().window("Treasy");
+        // Arrange
+        openWelcomePage();
 
         // Act
-        openSettingPage();
+        openMenuOptionPage("Einstellungen");
         openListAnimalType();
 
         // Assert
-        $(byText("Piglet")).should(exist);
-        $(byText("Weaner")).should(exist);
-        $(byText("Porker")).should(exist);
-        $(byText("Sow")).should(exist);
+        $(byText("Mastschwein")).should(exist);
+        $(byText("Jager")).should(exist);
+        $(byText("Muttersau")).should(exist);
+        $(byText("Eber")).should(exist);
+    }
+
+    private void openWelcomePage() {
+        switchTo().window("Treasy");
+        $(byText("Start")).waitUntil(appears, 100000);
+        open(BASE_URL + "/#/welcome");
     }
 
     @Test
     public void  checkDeletingFromListAnimalType(){
 
-       switchTo().window("Treasy");
+        // Arrange
+        switchTo().window("Treasy");
 
         // Act
-        openSettingPage();
+        openMenuOptionPage("Einstellungen");
         openListAnimalType();
         checkItemExist();
         deletItem();
@@ -115,26 +111,20 @@ public class TreasyTest {
     }
 
     private void openListAnimalType() {
-        $(byText("List animal types")).click();
+        $(byText("Liste der Tierarten")).click();
     }
 
-    private void openSettingPage() {
+    private void openMenuOptionPage(String einstellungen) {
         $(By.xpath("//*[@id='menu']")).click();
-        $(byText("Einstellungen")).click();
-        sleep(2000);
+        $(byText(einstellungen)).click();
     }
 
     private void openConfirmationLink() {
         $(byText("https://treasy-tst.eu-gb.")).click();
-        switchTo().window("Treasy");
-        $(byText("Schliessen")).click();
-        $(byText("Start")).click();
+        switchTo().window("qikCloud - Treasy");
     }
 
     private void openActivationEmail() {
-       // Wait for activation email to arrive
-       sleep(FIVE_SECONDS);
-       
         executeJavaScript("window.open('https://mail.google.com');"); // Open a new tab
         switchTo().window("Gmail");
         $("#Email").val("treasy.uitest@gmail.com").pressEnter();
