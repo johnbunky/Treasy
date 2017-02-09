@@ -33,7 +33,7 @@ public class TreasyTests_testng extends TestBase{
     public void registerWithActivationEmailAndConfirmationLink() {
         openStartPage().inputCredential()
 
-        //Assertj
+        //Assert
                 .successRegistration().should(exist);
     }
 

@@ -12,11 +12,15 @@ import static com.codeborne.selenide.Selenide.refresh;
 import static com.codeborne.selenide.Selenide.switchTo;
 import static com.codeborne.selenide.WebDriverRunner.closeWebDriver;
 
+import org.bouncycastle.asn1.dvcs.Data;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.By;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by johnbunky on 27.01.17.
@@ -25,11 +29,16 @@ public class TreasyTest {
 
     private static String BASE_URL = "https://treasy-tst.eu-gb.mybluemix.net";
 
+    Date date = new Date();
+    SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy hh:mm");
+    String Drug = "Herkunft" + format.format(date); // Create an unique string
+
     @BeforeClass
     public static void setup() {
         startMaximized = false;
         browser = "chrome";
         holdBrowserOpen = true;
+
     }
 
     @After
@@ -64,7 +73,7 @@ public class TreasyTest {
 
         // Act
         openMenuOptionPage("Einstellungen");
-        openListAnimalType();
+        openSettinsPageOption("Liste der Tierarten");
 
         // Assert
         $(byText("Mastschwein")).should(exist);
@@ -73,26 +82,47 @@ public class TreasyTest {
         $(byText("Eber")).should(exist);
     }
 
-    private void openWelcomePage() {
-        switchTo().window("Treasy");
-        $(byText("Start")).waitUntil(appears, 100000);
-        open(BASE_URL + "/#/welcome");
-    }
-
     @Test
     public void  checkDeletingFromListAnimalType(){
 
         // Arrange
-        switchTo().window("Treasy");
+        openWelcomePage();
 
         // Act
         openMenuOptionPage("Einstellungen");
-        openListAnimalType();
+        openSettinsPageOption("Liste der Tierarten");
         checkItemExist();
         deletItem();
 
         // Assert
         $(byText("Boar")).should(not(visible));
+    }
+
+    @Test
+    public void checkSettingsDrugSourceInput(){
+
+        // Arrange
+        openWelcomePage();
+
+        // Act
+        openMenuOptionPage("Einstellungen");
+        openSettinsPageOption("Arzneimittelherkunft erfassen");
+        inputNewDrug();
+        openSettinsPageOption("Liste der Arzneimittelherkünfte");
+
+        // Assert
+        $(byText(Drug)).should(exist);
+    }
+
+    private void inputNewDrug() {
+        $(By.xpath("//*[@placeholder='Name der Arzneimittelherkunft']")).val(Drug);
+        $(By.xpath("//*[@class='recommend']")).click();
+    }
+
+    private void openWelcomePage() {
+        switchTo().window("Treasy");
+        $(byText("Start")).waitUntil(appears, 100000);
+        open(BASE_URL + "/#/welcome");
     }
 
     private void checkItemExist(){
@@ -107,16 +137,16 @@ public class TreasyTest {
 
     private void deletItem() {
         $(byText("Boar")).$(By.xpath("//*[@class='deleteItem']")).click();
-        openListAnimalType();
+        openSettinsPageOption("Liste der Tierarten");
     }
 
-    private void openListAnimalType() {
-        $(byText("Liste der Tierarten")).click();
+    private void openSettinsPageOption(String elementText) {
+        $(byText(elementText)).click();
     }
 
-    private void openMenuOptionPage(String einstellungen) {
+    private void openMenuOptionPage(String elementText) {
         $(By.xpath("//*[@id='menu']")).click();
-        $(byText(einstellungen)).click();
+        $(byText(elementText)).click();
     }
 
     private void openConfirmationLink() {
