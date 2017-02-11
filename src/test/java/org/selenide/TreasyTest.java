@@ -12,7 +12,6 @@ import static com.codeborne.selenide.Selenide.refresh;
 import static com.codeborne.selenide.Selenide.switchTo;
 import static com.codeborne.selenide.WebDriverRunner.closeWebDriver;
 
-import org.bouncycastle.asn1.dvcs.Data;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -63,6 +62,9 @@ public class TreasyTest {
 
         // Assert
         $(byText("Anmeldung erfolgreich")).should(exist);
+        switchTo().window("Treasy");
+        $(byText("Sie haben sich erfolgreich für Treasy registriert.")).waitUntil(appears, 100000).should(exist);
+
     }
 
     @Test
@@ -91,11 +93,11 @@ public class TreasyTest {
         // Act
         openMenuOptionPage("Einstellungen");
         openSettinsPageOption("Liste der Tierarten");
-        checkItemExist();
-        deletItem();
+        //checkItemExist("Ferkel");
+        deletItem("Ferkel");
 
         // Assert
-        $(byText("Boar")).should(not(visible));
+        $(byText("Ferkel")).should(not(visible));
     }
 
     @Test
@@ -125,18 +127,18 @@ public class TreasyTest {
         open(BASE_URL + "/#/welcome");
     }
 
-    private void checkItemExist(){
-        if(!$(byText("Boar")).exists()){
+    private void checkItemExist(String ferkel){
+        if(!$(byText(ferkel)).exists()){
             refresh();
-            $(byText("Register animal type")).click();
+            $(byText("Tierart erfassen")).click();
             $(By.xpath("//*[@class='down']")).click();
-            $(byText("Boar")).click();
-            $(byText("Save")).click();
+            $(byText(ferkel)).click();
+            $(By.xpath("//*[@class='recommend']")).click();
         }
     }
 
-    private void deletItem() {
-        $(byText("Boar")).$(By.xpath("//*[@class='deleteItem']")).click();
+    private void deletItem(String ferkel) {
+        $(By.xpath("//div[child::span[text()='Ferkel']]/*/button[@class='deleteItem']")).click();
         openSettinsPageOption("Liste der Tierarten");
     }
 
