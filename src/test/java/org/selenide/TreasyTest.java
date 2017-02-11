@@ -30,7 +30,7 @@ public class TreasyTest {
 
     Date date = new Date();
     SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy hh:mm");
-    String Drug = "Herkunft" + format.format(date); // Create an unique string
+    String dateFormat =  format.format(date); // Create an unique string
 
     @BeforeClass
     public static void setup() {
@@ -93,7 +93,7 @@ public class TreasyTest {
         // Act
         openMenuOptionPage("Einstellungen");
         openSettinsPageOption("Liste der Tierarten");
-        //checkItemExist("Ferkel");
+        checkItemExist("Ferkel");
         deletItem("Ferkel");
 
         // Assert
@@ -113,32 +113,32 @@ public class TreasyTest {
         openSettinsPageOption("Liste der Arzneimittelherkünfte");
 
         // Assert
-        $(byText(Drug)).should(exist);
+        $(byText("Herkunft" + dateFormat)).should(exist);
     }
 
     private void inputNewDrug() {
-        $(By.xpath("//*[@placeholder='Name der Arzneimittelherkunft']")).val(Drug);
+        $(By.xpath("//*[@placeholder='Name der Arzneimittelherkunft']")).val("Herkunft" +dateFormat);
         $(By.xpath("//*[@class='recommend']")).click();
     }
 
     private void openWelcomePage() {
         switchTo().window("Treasy");
         $(byText("Start")).waitUntil(appears, 100000);
-        open(BASE_URL + "/#/welcome");
     }
 
-    private void checkItemExist(String ferkel){
-        if(!$(byText(ferkel)).exists()){
+    private void checkItemExist(String text){
+        if(!$(byText(text)).exists()) {
             refresh();
-            $(byText("Tierart erfassen")).click();
+            openSettinsPageOption("Tierart erfassen");
             $(By.xpath("//*[@class='down']")).click();
-            $(byText(ferkel)).click();
-            $(By.xpath("//*[@class='recommend']")).click();
+            $(byText(text)).click();
+            $(byText("Speichern")).click();
+            openSettinsPageOption("Liste der Tierarten");
         }
     }
 
     private void deletItem(String ferkel) {
-        $(By.xpath("//div[child::span[text()='Ferkel']]/*/button[@class='deleteItem']")).click();
+        $(By.xpath("//*[child::span[text()='" + ferkel +"']]/button")).click();
         openSettinsPageOption("Liste der Tierarten");
     }
 
