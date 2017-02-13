@@ -137,8 +137,8 @@ public class TreasyTest {
         }
     }
 
-    private void deletItem(String ferkel) {
-        $(By.xpath("//*[child::span[text()='" + ferkel +"']]/button")).click();
+    private void deletItem(String text) {
+        $(By.xpath("//*[child::span[text()='" + text +"']]/button")).click();
         openSettinsPageOption("Liste der Tierarten");
     }
 
