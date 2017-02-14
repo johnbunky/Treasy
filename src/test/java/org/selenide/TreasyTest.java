@@ -12,7 +12,6 @@ import static com.codeborne.selenide.Selenide.refresh;
 import static com.codeborne.selenide.Selenide.switchTo;
 import static com.codeborne.selenide.WebDriverRunner.closeWebDriver;
 
-import org.bouncycastle.asn1.dvcs.Data;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -31,7 +30,7 @@ public class TreasyTest {
 
     Date date = new Date();
     SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy hh:mm");
-    String Drug = "Herkunft" + format.format(date); // Create an unique string
+    String dateFormat =  format.format(date); // Create an unique string
 
     @BeforeClass
     public static void setup() {
@@ -63,6 +62,9 @@ public class TreasyTest {
 
         // Assert
         $(byText("Anmeldung erfolgreich")).should(exist);
+        switchTo().window("Treasy");
+        $(byText("Sie haben sich erfolgreich für Treasy registriert.")).waitUntil(appears, 100000).should(exist);
+
     }
 
     @Test
@@ -91,11 +93,11 @@ public class TreasyTest {
         // Act
         openMenuOptionPage("Einstellungen");
         openSettinsPageOption("Liste der Tierarten");
-        checkItemExist();
-        deletItem();
+        checkItemExist("Ferkel");
+        deletItem("Ferkel");
 
         // Assert
-        $(byText("Boar")).should(not(visible));
+        $(byText("Ferkel")).should(not(visible));
     }
 
     @Test
@@ -111,32 +113,32 @@ public class TreasyTest {
         openSettinsPageOption("Liste der Arzneimittelherkünfte");
 
         // Assert
-        $(byText(Drug)).should(exist);
+        $(byText("Herkunft" + dateFormat)).should(exist);
     }
 
     private void inputNewDrug() {
-        $(By.xpath("//*[@placeholder='Name der Arzneimittelherkunft']")).val(Drug);
+        $(By.xpath("//*[@placeholder='Name der Arzneimittelherkunft']")).val("Herkunft" +dateFormat);
         $(By.xpath("//*[@class='recommend']")).click();
     }
 
     private void openWelcomePage() {
         switchTo().window("Treasy");
         $(byText("Start")).waitUntil(appears, 100000);
-        open(BASE_URL + "/#/welcome");
     }
 
-    private void checkItemExist(){
-        if(!$(byText("Boar")).exists()){
+    private void checkItemExist(String text){
+        if(!$(byText(text)).exists()) {
             refresh();
-            $(byText("Register animal type")).click();
+            openSettinsPageOption("Tierart erfassen");
             $(By.xpath("//*[@class='down']")).click();
-            $(byText("Boar")).click();
-            $(byText("Save")).click();
+            $(byText(text)).click();
+            $(byText("Speichern")).click();
+            openSettinsPageOption("Liste der Tierarten");
         }
     }
 
-    private void deletItem() {
-        $(byText("Boar")).$(By.xpath("//*[@class='deleteItem']")).click();
+    private void deletItem(String text) {
+        $(By.xpath("//*[child::span[text()='" + text +"']]/button")).click();
         openSettinsPageOption("Liste der Tierarten");
     }
 
