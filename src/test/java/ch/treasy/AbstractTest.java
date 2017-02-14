@@ -13,29 +13,37 @@ import static com.codeborne.selenide.Selenide.sleep;
 import static com.codeborne.selenide.Selenide.switchTo;
 import static com.codeborne.selenide.WebDriverRunner.closeWebDriver;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.openqa.selenium.By;
-
-import com.codeborne.selenide.SelenideElement;
 
 public abstract class AbstractTest {
 
-   private static final long FIFE_MINUTES = 300000;
-   
    private static final long THIRTY_SECONDS = 30000;
-   
+
    private static final long FIFTEEN_SECONDS = 15000;
 
    private static final long FIVE_SECONDS = 5000;
 
    private static final long TWO_SECONDS = 2000;
 
-   public static String BASE_URL = "https://treasy-tst.eu-gb.mybluemix.net";
+   private static final String BASE_URL = "https://treasy-tst.eu-gb.mybluemix.net";
 
-   private static final String EMAIL_ADDRESS = "treasy.uitest@gmail.com";
+   private static final String EMAIL_USER = "treasy.uitest";
+
+   private static final String EMAIL_DOMAIN = "@gmail.com";
+
+   private static final String EMAIL_ADDRESS = EMAIL_USER + EMAIL_DOMAIN;
 
    private static final String EMAIL_PASSWORD = "N3cqNkjF6RvN";
+
+   private GuiLang guiLang;
+
+   public AbstractTest(GuiLang guiLang) {
+      this.guiLang = guiLang;
+   }
 
    @BeforeClass
    public static void setup() {
@@ -51,11 +59,12 @@ public abstract class AbstractTest {
       sleep(FIVE_SECONDS);
 
       // Request confirmation email
-      $("input[type=\"email\"]").val(EMAIL_ADDRESS);
+      String email = EMAIL_USER + "+" + new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + EMAIL_DOMAIN;
+      $("input[type=\"email\"]").val(email);
       $(byText("Bestätigungslink anfordern")).click();
 
       // Wait for activation email to arrive
-      sleep(TWO_SECONDS);
+      // sleep(TWO_SECONDS);
 
       // Confirm registration
       executeJavaScript("window.open('https://mail.google.com');"); // Open a new tab
@@ -76,7 +85,7 @@ public abstract class AbstractTest {
       if ($(byText("Schliessen")).isDisplayed()) {
          $(byText("Schliessen")).click();
       }
-      $(byText("Start")).waitUntil(exist, FIFE_MINUTES);
+      $(byText("Start")).waitUntil(exist, THIRTY_SECONDS);
       $(byText("Start")).click();
 
    }
