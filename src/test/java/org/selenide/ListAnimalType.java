@@ -9,7 +9,7 @@ import static com.codeborne.selenide.Selenide.$$;
  * Created by johnbunky on 06.02.17.
  */
 public class ListAnimalType {
-    public ElementsCollection listAnimalType(){
-        return $$(By.xpath("//*section[@class='dialogue']"));
+    public ElementsCollection collectionListAnimalTypes(){
+        return $$(By.xpath("//section[@class='dialogue']/div//span"));
     }
 }

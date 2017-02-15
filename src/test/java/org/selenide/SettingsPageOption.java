@@ -7,9 +7,9 @@ import static com.codeborne.selenide.Selenide.page;
 /**
  * Created by johnbunky on 06.02.17.
  */
-public class SettingsPage {
-    public ListAnimalType openListAnimalType() {
-        $(byText("List animal types")).click();
+public class SettingsPageOption {
+    public ListAnimalType openSettinsPageOption(String text) {
+        $(byText(text)).click();
         return page(ListAnimalType.class);
     }
 }

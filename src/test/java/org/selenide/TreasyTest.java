@@ -27,6 +27,7 @@ import java.util.Date;
 public class TreasyTest {
 
     private static String BASE_URL = "https://treasy-tst.eu-gb.mybluemix.net";
+    private  String someID = "1";
 
     Date date = new Date();
     SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy hh:mm");
@@ -58,17 +59,16 @@ public class TreasyTest {
     }
 
     @Test
-    public void registerWithActivationEmailAndConfirmationLink() {
+    public void registerWithActivationEmailAndConfirmationLinkTest() {
 
         // Assert
         $(byText("Anmeldung erfolgreich")).should(exist);
         switchTo().window("Treasy");
         $(byText("Sie haben sich erfolgreich für Treasy registriert.")).waitUntil(appears, 100000).should(exist);
-
     }
 
     @Test
-    public void checkSettingsListAnimalType() {
+    public void settingsListAnimalTypeTest() {
 
         // Arrange
         openWelcomePage();
@@ -85,7 +85,7 @@ public class TreasyTest {
     }
 
     @Test
-    public void  checkDeletingFromListAnimalType(){
+    public void deletingFromListAnimalTypeTest(){
 
         // Arrange
         openWelcomePage();
@@ -101,7 +101,7 @@ public class TreasyTest {
     }
 
     @Test
-    public void checkSettingsDrugSourceInput(){
+    public void settingsDrugSourceInputTest(){
 
         // Arrange
         openWelcomePage();
@@ -167,7 +167,7 @@ public class TreasyTest {
     }
 
     private void inputEmailAddress() {
-        $("input[type=\"email\"]").val("treasy.uitest@gmail.com");
+        $("input[type=\"email\"]").val("treasy.uitest+" + someID + "@gmail.com");
         $(byText("Bestätigungslink anfordern")).click();
     }
 }
