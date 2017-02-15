@@ -1,5 +1,7 @@
 package org.selenide;
 
+import org.openqa.selenium.By;
+
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.page;
@@ -11,5 +13,10 @@ public class SettingsPageOption {
     public ListAnimalType openSettinsPageOption(String text) {
         $(byText(text)).click();
         return page(ListAnimalType.class);
+    }
+
+    public UpdateData openUpdateDataOption(String xpathExpression) {
+        $(By.xpath(xpathExpression)).click();
+        return page(UpdateData.class);
     }
 }

@@ -34,14 +34,14 @@ public class TreasyTest_PObjct extends StartPage{
     }
 
     @Test
-    public void registerWithActivationEmailAndConfirmationLinkTest1() {
+    public void registerWithActivationEmailAndConfirmationLinkTest() {
 
         // Assert
         welcomePage.successRegistration().should(exist);
     }
 
     @Test
-    public void settingsListAnimalTypeTest1(){
+    public void settingsListAnimalTypeTest(){
 
         // Arrange
         ElementsCollection collectionListAnimalTypes = welcomePage
@@ -60,6 +60,13 @@ public class TreasyTest_PObjct extends StartPage{
 
     @Test
     public void checkGroupAddTreatmentTest(){
-        //TODO
+
+        // Arrange
+        welcomePage
+
+                // Act
+                .openMenuOptionPage("Einstellungen")
+                .openUpdateDataOption("//*[section[@class='settings']][4]")
+                .intutData();
     }
 }
