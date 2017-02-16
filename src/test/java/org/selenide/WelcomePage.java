@@ -26,4 +26,10 @@ public class WelcomePage {
         $(byText(settings)).click();
         return page(SettingsPageOption.class);
     }
+
+    public RegisterSupply openMedicalSuppliesPage(String supplies) {
+        $(By.xpath("//*[@id='menu']")).click();
+        $(byText(supplies)).click();
+        return page(RegisterSupply.class);
+    }
 }

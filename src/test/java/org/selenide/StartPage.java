@@ -39,7 +39,7 @@ public class StartPage {
 
     private void inputEmailAddress() {
         $("input[type=\"email\"]").val("treasy.uitest+" + someID + "@gmail.com");
-        $(byText("Bestätigungslink anfordern")).click();
+        $(byText("Bestätigungslink anfordern")).waitUntil(appears, 5000).click();
     }
 
     private void openWelcomePage() {

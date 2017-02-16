@@ -17,7 +17,7 @@ public class UpdateData {
         $(By.xpath(".//input[@ng-if][4]")).val("Musterstrasse 1");
         $(By.xpath(".//input[@ng-if][5]")).val("1000");
         $(By.xpath(".//input[@ng-if][6]")).val("Musterlingen");
-        $(byText("Speichern")).click();
+        $(By.xpath("(//*[@class='recommend'])[2]")).click();
         return page (SettingsPageOption.class);
     }
 }

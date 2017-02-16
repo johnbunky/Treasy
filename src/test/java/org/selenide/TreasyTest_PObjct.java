@@ -67,6 +67,11 @@ public class TreasyTest_PObjct extends StartPage{
                 // Act
                 .openMenuOptionPage("Einstellungen")
                 .openUpdateDataOption("//*[section[@class='settings']][4]")
-                .intutData();
+                .intutData()
+                .registerDrugNameOption("//*[section[@class='settings']][9]")
+                .inputName()
+                .openMedicalSuppliesPage("Vorrat")
+                .openInputSupplyPage()
+                .inputSupply();
     }
 }
