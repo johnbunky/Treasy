@@ -72,6 +72,7 @@ public class TreasyTest_PObjct extends StartPage{
                 .inputName()
                 .openMedicalSuppliesPage("Vorrat")
                 .openInputSupplyPage()
-                .inputSupply();
+                .inputSupply()
+                .saveSingleTreatment();
     }
 }

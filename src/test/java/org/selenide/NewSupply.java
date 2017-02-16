@@ -11,11 +11,11 @@ import static com.codeborne.selenide.Selenide.page;
  * Created by johnbunky on 16.02.17.
  */
 public class NewSupply {
-    public RegisterSupply inputSupply(){
+    public ConfirmSave inputSupply(){
         $(By.xpath("(//input)[1]")).val("40063.021");
-        $(byText("Dinolytic 5 mg/ml (50 ml, 40063.021)")).waitUntil(appears, 5000).click();
+        $(byText("Dinolytic 5 mg/ml (50 ml, 40063.021)")).waitUntil(appears, 20000).click();
         $(By.xpath("(//input)[6]")).val("50");
         $(By.xpath("//footer")).click();
-        return page (RegisterSupply.class);
+        return page (ConfirmSave.class);
     }
 }

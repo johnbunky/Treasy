@@ -21,15 +21,15 @@ public class WelcomePage {
         return $(byText("Sie haben sich erfolgreich für Treasy registriert.")).waitUntil(appears, 100000);
     }
 
-    public SettingsPageOption openMenuOptionPage(String settings) {
+    public SettingsPage openMenuOptionPage(String settings) {
         $(By.xpath("//*[@id='menu']")).click();
         $(byText(settings)).click();
-        return page(SettingsPageOption.class);
+        return page(SettingsPage.class);
     }
 
-    public RegisterSupply openMedicalSuppliesPage(String supplies) {
+    public SupplyPage openMedicalSuppliesPage(String supplies) {
         $(By.xpath("//*[@id='menu']")).click();
         $(byText(supplies)).click();
-        return page(RegisterSupply.class);
+        return page(SupplyPage.class);
     }
 }

@@ -8,9 +8,9 @@ import static com.codeborne.selenide.Selenide.page;
 /**
  * Created by johnbunky on 16.02.17.
  */
-public class RegisterSupply {
-    public NewSupply openInputSupplyPage(){
-        $(By.xpath("//footer")).click();
-        return page(NewSupply.class);
+public class ConfirmSave {
+    public TreatPage saveSingleTreatment(){
+        $(By.xpath("//button[3]")).click();
+        return page (TreatPage.class);
     }
 }
