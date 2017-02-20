@@ -6,13 +6,13 @@ import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.switchTo;
+import static org.selenide.TreasyTest_PObjct.dateFormat;
 
 /**
  * Created by johnbunky on 06.02.17.
  */
 public class StartPage {
 
-    private  String someID = "1";
 
     public WelcomePage inputCredential() {
         inputEmailAddress();
@@ -23,7 +23,7 @@ public class StartPage {
     }
 
     private void openConfirmationLink() {
-        $(byText("https://treasy-tst.eu-gb.")).click();
+        $(byText("https://treasy-tst.eu-gb.")).waitUntil(appears, 5000).click();
         switchTo().window("qikCloud - Treasy");
     }
 
@@ -38,7 +38,7 @@ public class StartPage {
     }
 
     private void inputEmailAddress() {
-        $("input[type=\"email\"]").val("treasy.uitest+" + someID + "@gmail.com");
+        $("input[type=\"email\"]").val("treasy.uitest+" + dateFormat + "@gmail.com");
         $(byText("Bestätigungslink anfordern")).waitUntil(appears, 5000).click();
     }
 

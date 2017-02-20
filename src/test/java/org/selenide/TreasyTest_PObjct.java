@@ -5,6 +5,9 @@ import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Configuration.browser;
@@ -21,6 +24,10 @@ public class TreasyTest_PObjct extends StartPage{
     StartPage startPage = open("https://treasy-tst.eu-gb.mybluemix.net", StartPage.class);
     WelcomePage welcomePage = startPage.inputCredential();
 
+    static Date date = new Date();
+    static SimpleDateFormat format = new SimpleDateFormat("yyMMddHHmmss");
+    static String dateFormat =  format.format(date); // Create an unique string
+
     @BeforeClass
     public static void setup(){
         startMaximized = false;
@@ -32,6 +39,8 @@ public class TreasyTest_PObjct extends StartPage{
     public  void logout(){
         closeWebDriver();
     }
+
+
 
     @Test
     public void registerWithActivationEmailAndConfirmationLinkTest() {
@@ -59,7 +68,7 @@ public class TreasyTest_PObjct extends StartPage{
     }
 
     @Test
-    public void checkGroupAddTreatmentTest(){
+    public void addTreatmentTest(){
 
         // Arrange
         welcomePage
@@ -73,6 +82,7 @@ public class TreasyTest_PObjct extends StartPage{
                 .openMedicalSuppliesPage("Vorrat")
                 .openInputSupplyPage()
                 .inputSupply()
-                .saveSingleTreatment();
+                .saveSingleTreatment()
+                .addTreatment();
     }
 }
