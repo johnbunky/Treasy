@@ -21,15 +21,22 @@ public class WelcomePage {
         return $(byText("Sie haben sich erfolgreich für Treasy registriert.")).waitUntil(appears, 100000);
     }
 
-    public SettingsPage openMenuOptionPage(String settings) {
-        $(By.xpath("//*[@id='menu']")).click();
+    public static SettingsPage openMenuOptionPage(String settings) {
+        $(By.xpath("//*[@id='menu']")).waitUntil(appears, 5000).click();
         $(byText(settings)).click();
         return page(SettingsPage.class);
     }
 
-    public SupplyPage openMedicalSuppliesPage(String supplies) {
-        $(By.xpath("//*[@id='menu']")).click();
+    public static SupplyPage openMedicalSuppliesPage(String supplies) {
+        //open("https://treasy-tst.eu-gb.mybluemix.net/#/newStock");
+        $(By.xpath("//*[@id='menu']")).waitUntil(appears, 5000).click();
         $(byText(supplies)).click();
         return page(SupplyPage.class);
+    }
+
+    public static JournalPage openJournalPage(String journal) {
+        $(By.xpath("//*[@id='menu']")).waitUntil(appears, 5000).click();
+        $(byText(journal)).click();
+        return page(JournalPage.class);
     }
 }

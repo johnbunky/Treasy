@@ -20,7 +20,7 @@ public class SettingsPage {
         return page(UpdateData.class);
     }
 
-    public  DrugName registerDrugNameOption(String xpathExpression) {
+    public static DrugName registerDrugNameOption(String xpathExpression) {
         $(By.xpath(xpathExpression)).click();
         return page(DrugName.class);
     }
