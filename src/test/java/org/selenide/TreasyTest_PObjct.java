@@ -5,14 +5,11 @@ import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
+import static org.selenide.StaticData.*;
 import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Configuration.browser;
 import static com.codeborne.selenide.Configuration.holdBrowserOpen;
-import static com.codeborne.selenide.Configuration.startMaximized;
 import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.WebDriverRunner.closeWebDriver;
 
@@ -24,13 +21,10 @@ public class TreasyTest_PObjct extends StartPage{
     StartPage startPage = open("https://treasy-tst.eu-gb.mybluemix.net", StartPage.class);
     WelcomePage welcomePage = startPage.inputCredential();
 
-    static Date date = new Date();
-    static SimpleDateFormat format = new SimpleDateFormat("yyMMddHHmmss");
-    static String dateFormat =  format.format(date); // Create an unique string
 
     @BeforeClass
     public static void setup(){
-        startMaximized = false;
+        //startMaximized = false;
         browser = "chrome";
         holdBrowserOpen = true;
     }
@@ -85,5 +79,14 @@ public class TreasyTest_PObjct extends StartPage{
                 .saveSingleTreatment()
                 .addTreatment();
                 WelcomePage.openJournalPage("Journal");
+
+        // Assert
+        JournalPage.tableColumn("//h2[3]").shouldHave(text(TVD_NUMBER + ", " + OPERATION_NAME +
+                ", " + ADDRESS_LINE1 + ", " + ADDRES_LINE2 + ", " + ZIP + " " + CITY));
+        JournalPage.tableColumn("(//td)[9]").shouldHave(text("" + DATA_FORMAT + " ABC "));
+        JournalPage.tableColumn("(//ul/li)[8]").shouldHave(text(REASON));
+        JournalPage.tableColumn("(//td)[11]").shouldHave(text(" " + DRUG + " "));
+        JournalPage.tableColumn("(//td)[12]").shouldHave(text(" " + DOSE + " ml "));
+        JournalPage.tableColumn("(//td)[16]").shouldHave(text(" " + ORIGIN + " "));
     }
 }

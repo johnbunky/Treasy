@@ -3,6 +3,7 @@ package org.selenide;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
 
+import static org.selenide.StaticData.*;
 import static com.codeborne.selenide.Condition.appears;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
@@ -18,24 +19,23 @@ public class WelcomePage {
     }
 
     public SelenideElement successRegistration(){
-        return $(byText("Sie haben sich erfolgreich für Treasy registriert.")).waitUntil(appears, 100000);
+        return $(byText("Sie haben sich erfolgreich für Treasy registriert.")).waitUntil(appears, TEN_SECONDS);
     }
 
     public static SettingsPage openMenuOptionPage(String settings) {
-        $(By.xpath("//*[@id='menu']")).waitUntil(appears, 5000).click();
+        $(By.xpath("//*[@id='menu']")).waitUntil(appears, TEN_SECONDS).click();
         $(byText(settings)).click();
         return page(SettingsPage.class);
     }
 
     public static SupplyPage openMedicalSuppliesPage(String supplies) {
-        //open("https://treasy-tst.eu-gb.mybluemix.net/#/newStock");
-        $(By.xpath("//*[@id='menu']")).waitUntil(appears, 5000).click();
+        $(By.xpath("//*[@id='menu']")).waitUntil(appears, TEN_SECONDS).click();
         $(byText(supplies)).click();
         return page(SupplyPage.class);
     }
 
     public static JournalPage openJournalPage(String journal) {
-        $(By.xpath("//*[@id='menu']")).waitUntil(appears, 5000).click();
+        $(By.xpath("//*[@id='menu']")).waitUntil(appears, TEN_SECONDS).click();
         $(byText(journal)).click();
         return page(JournalPage.class);
     }
