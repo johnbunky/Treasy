@@ -5,6 +5,8 @@ import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import static com.codeborne.selenide.CollectionCondition.size;
+import static org.selenide.ListAnimalType.*;
 import static org.selenide.StaticData.*;
 import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.text;
@@ -41,6 +43,7 @@ public class TreasyTest_PObjct extends StartPage{
 
         // Assert
         welcomePage.successRegistration().should(exist);
+        WelcomePage.popupRegistration().should(exist);
     }
 
     @Test
@@ -60,6 +63,24 @@ public class TreasyTest_PObjct extends StartPage{
         collectionListAnimalTypes.findBy(text("Jager")).should(exist);
         collectionListAnimalTypes.findBy(text("Mastschwein")).should(exist);
     }
+
+    @Test
+    public void deleteListAnimalItemTest(){
+
+        // Arrange
+        welcomePage
+
+                // Act
+                .openMenuOptionPage("Einstellungen")
+                .openSettinsPageOption("Liste der Tierarten")
+                .collectionListAnimalTypes().shouldHave(size(5));
+                ListAnimalType.deleteItem();
+                SettingsPage.openSettinsPageOption("Liste der Tierarten")
+
+                        // Assert
+                        .collectionListAnimalTypes().shouldHave(size(4));
+    }
+
 
     @Test
     public void addTreatmentTest(){

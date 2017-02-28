@@ -13,7 +13,7 @@ import static com.codeborne.selenide.Selenide.*;
  */
 public class WelcomePage {
 
-    public  SelenideElement popupRegistration(){
+    public static SelenideElement popupRegistration(){
         switchTo().window("qikCloud - Treasy");
         return $(byText("Anmeldung erfolgreich"));
     }
