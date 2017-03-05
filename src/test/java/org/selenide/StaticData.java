@@ -8,7 +8,11 @@ import java.util.Date;
  */
 public class StaticData {
 
+   static long ONE_SECOND = 1000;
+   
     static long TEN_SECONDS = 10000;
+
+    static long TWENTY_SECONDS = 20000;
 
     static Date date = new Date();
     static SimpleDateFormat format = new SimpleDateFormat("yyMMddHHmmss");

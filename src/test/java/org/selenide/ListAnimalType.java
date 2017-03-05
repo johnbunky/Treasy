@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.sleep;
 
 /**
  * Created by johnbunky on 06.02.17.
@@ -16,5 +17,6 @@ public class ListAnimalType {
 
     public static void deleteItem(){
         $(By.xpath("(//button[@class='deleteItem'])[1]")).click();
+        sleep(StaticData.ONE_SECOND);
     }
 }

@@ -17,8 +17,8 @@ public class TreatPage {
         $(byText(REASON)).waitUntil(appear, TEN_SECONDS).click();  // Select reason
         $(By.xpath("(//input)[6]")).val(DATA_FORMAT + " ABC");
         $(By.xpath("(//input)[7]")).click();
-        sleep(TEN_SECONDS);
-        $(By.xpath("(//div)[18]")).waitUntil(appear, TEN_SECONDS).click(); // Select animal type
+        sleep(ONE_SECOND);
+        $(byText("Muttersau")).waitUntil(appear, TEN_SECONDS).click(); // Select animal type
         $(By.xpath("//footer")).click();
         $(By.xpath("(//button[2])[2]")).click();
     }
