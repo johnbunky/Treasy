@@ -3,10 +3,12 @@ package org.selenide;
 import static com.codeborne.selenide.Condition.appears;
 import static com.codeborne.selenide.Condition.disappears;
 import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.executeJavaScript;
+import static com.codeborne.selenide.Selenide.page;
 import static com.codeborne.selenide.Selenide.switchTo;
-import static org.selenide.StaticData.*;
+import static org.selenide.StaticData.DATA_FORMAT;
+import static org.selenide.StaticData.TEN_SECONDS;
 
 /**
  * Created by johnbunky on 06.02.17.
@@ -22,9 +24,11 @@ public class StartPage {
         return page(WelcomePage.class);
     }
 
-    private void openConfirmationLink() {
-        $(byText("https://treasy-tst.eu-gb.")).waitUntil(appears, TEN_SECONDS).click();
-        switchTo().window("qikCloud - Treasy");
+   private void openConfirmationLink() {
+      // I don't understand why this only works with 25 characters of the link!!!
+      String linkText = Settings.getUrl().substring(0, 25);
+      $(byText(linkText)).waitUntil(appears, TEN_SECONDS).click();
+      switchTo().window("qikCloud - Treasy");
     }
 
     private void openActivationEmail() {
@@ -34,7 +38,7 @@ public class StartPage {
         $("#Passwd").val("N3cqNkjF6RvN");
         $("#signIn").click();
         $(".error-msg").waitUntil(disappears, TEN_SECONDS);
-        $(byText("TST: Noch ein Klick bis Treasy!")).click();
+        $(byText(Settings.getEnvId() + ": Noch ein Klick bis Treasy!")).click();
     }
 
     private void inputEmailAddress() {
