@@ -25,9 +25,7 @@ public class StartPage {
     }
 
    private void openConfirmationLink() {
-      // I don't understand why this only works with 25 characters of the link!!!
-      String linkText = Settings.getUrl().substring(0, 25);
-      $(byText(linkText)).waitUntil(appears, TEN_SECONDS).click();
+      $(byText(Settings.getConfirmationLinkSearchString())).waitUntil(appears, TEN_SECONDS).click();
       switchTo().window("qikCloud - Treasy");
     }
 

@@ -30,7 +30,7 @@ import com.codeborne.selenide.ElementsCollection;
  */
 public class TreasyTest_PObjct extends StartPage{
 
-    StartPage startPage = open(Settings.getUrl(), StartPage.class);
+    StartPage startPage = open(Settings.getServerUrl(), StartPage.class);
     WelcomePage welcomePage = startPage.inputCredential();
 
 

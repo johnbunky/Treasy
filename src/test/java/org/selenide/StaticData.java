@@ -28,6 +28,6 @@ public class StaticData {
     static String REASON = "Geburtshilfe";
     static String DOSE = "2";
     static String DRUG = "Dinolytic 5 mg/ml";
-    static String ORIGIN = "Meier & Müller Tierarzte";
+    static String ORIGIN = "Meier & Müller Tierärzte";
 
 }
