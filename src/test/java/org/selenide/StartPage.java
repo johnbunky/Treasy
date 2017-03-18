@@ -10,6 +10,8 @@ import static com.codeborne.selenide.Selenide.switchTo;
 import static org.selenide.StaticData.DATA_FORMAT;
 import static org.selenide.StaticData.TEN_SECONDS;
 
+import ch.treasy.uitest.Settings;
+
 /**
  * Created by johnbunky on 06.02.17.
  */

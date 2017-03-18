@@ -1,4 +1,4 @@
-package org.selenide;
+package ch.treasy.uitest;
 
 public class Settings {
 

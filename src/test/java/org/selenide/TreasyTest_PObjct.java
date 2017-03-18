@@ -25,6 +25,8 @@ import org.junit.Test;
 
 import com.codeborne.selenide.ElementsCollection;
 
+import ch.treasy.uitest.Settings;
+
 /**
  * Created by johnbunky on 15.02.17.
  */
