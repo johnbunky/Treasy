@@ -20,10 +20,13 @@ import ch.treasy.uitest.Stock;
 import ch.treasy.uitest.Treatment;
 import ch.treasy.uitest.data.DrugSource;
 import ch.treasy.uitest.data.Farm;
+import ch.treasy.uitest.data.Packaging;
+import ch.treasy.uitest.data.Reason;
+import ch.treasy.uitest.data.SimpleAnimal;
 import ch.treasy.uitest.data.User;
 
 public class TreasyPage {
-   
+
    public TreasyPage register(User user) {
       Selenide.open(Settings.getServerUrl());
       inputEmailAddress(user);
@@ -36,32 +39,32 @@ public class TreasyPage {
    private void openConfirmationLink() {
       $(byText(Settings.getConfirmationLinkSearchString())).waitUntil(appears, Duration.TEN_SECONDS.getMillis()).click();
       switchTo().window("qikCloud - Treasy");
-    }
+   }
 
-    private void openActivationEmail(User user) {
-        executeJavaScript("window.open('https://mail.google.com');"); // Open a new tab
-        switchTo().window("Gmail");
-        $("#Email").val(user.getMailAddress()).pressEnter();
-        $("#Passwd").val(user.getMailPassword());
-        $("#signIn").click();
-        $(".error-msg").waitUntil(disappears, Duration.TEN_SECONDS.getMillis());
-        $(byText(Settings.getEnvId() + ": Noch ein Klick bis Treasy!")).click();
-    }
+   private void openActivationEmail(User user) {
+      executeJavaScript("window.open('https://mail.google.com');"); // Open a new tab
+      switchTo().window("Gmail");
+      $("#Email").val(user.getMailAddress()).pressEnter();
+      $("#Passwd").val(user.getMailPassword());
+      $("#signIn").click();
+      $(".error-msg").waitUntil(disappears, Duration.TEN_SECONDS.getMillis());
+      $(byText(Settings.getEnvId() + ": Noch ein Klick bis Treasy!")).click();
+   }
 
-    private void inputEmailAddress(User user) {
-        $("input[type=\"email\"]").val(user.getNewMailAddress());
-        $(byText("Bestätigungslink anfordern")).waitUntil(appears, Duration.TEN_SECONDS.getMillis()).click();
-    }
+   private void inputEmailAddress(User user) {
+      $("input[type=\"email\"]").val(user.getNewMailAddress());
+      $(byText("Bestätigungslink anfordern")).waitUntil(appears, Duration.TEN_SECONDS.getMillis()).click();
+   }
 
-    private void openWelcomePage() {
-        switchTo().window("Treasy");
-        $(byText("Start")).waitUntil(appears, Duration.TEN_SECONDS.getMillis());
-    }
+   private void openWelcomePage() {
+      switchTo().window("Treasy");
+      $(byText("Start")).waitUntil(appears, Duration.TEN_SECONDS.getMillis());
+   }
 
-    public TreasyPage treat(Treatment treatment) {
-       openTreatmentPage().inputTreatment(treatment);
-       return this;
-    }
+   public TreasyPage treat(Treatment treatment) {
+      openTreatmentPage().inputTreatment(treatment);
+      return this;
+   }
 
    public TreasyPage registerStock(Stock stock) {
       openStockPage().registerStock(stock);
@@ -101,5 +104,115 @@ public class TreasyPage {
       for (Stock stock : stockList) {
          registerStock(stock);
       }
+   }
+
+   /**
+    * Check if treatments exist in journal and in treatment details
+    * 
+    * @param treatments
+    *           The treatments to check
+    * @return true of the treatments in the journal and details are Ok.
+    */
+   public boolean check(List<Treatment> treatments) {
+
+      // TODO Implement
+
+      return false;
+   }
+
+   /**
+    * Change the packaging of the treatment in the specified position.
+    * 
+    * @param treatments
+    *           The actual treatments
+    * @param toChange
+    *           The position to change.
+    * @param newPackaging
+    *           The new packaging.
+    * @return the new treatments.
+    */
+   public List<Treatment> change(List<Treatment> treatments, int toChange, Packaging newPackaging) {
+
+      // TODO Implement
+
+      return treatments;
+   }
+
+   /**
+    * Change the packaging of the treatment in the specified position.
+    * 
+    * @param treatments
+    *           The actual treatments
+    * @param toChange
+    *           The position to change.
+    * @param newDose
+    *           The new dose.
+    * @return the new treatments.
+    */
+   public List<Treatment> change(List<Treatment> treatments, int toChange, int newDose) {
+
+      // TODO Implement
+
+      return treatments;
+   }
+
+   /**
+    * Change the packaging of the treatment in the specified position.
+    * 
+    * @param treatments
+    *           The actual treatments
+    * @param toChange
+    *           The position to change.
+    * @param newReasons
+    *           The new reasons.
+    * @return the new treatments.
+    */
+   public List<Treatment> change(List<Treatment> treatments, int toChange, Reason... newReasons) {
+
+      // TODO Implement
+
+      return treatments;
+   }
+
+   /**
+    * Change the animal of the treatment in the specified position.
+    * 
+    * @param treatments
+    *           The actual treatments
+    * @param toChange
+    *           The position to change.
+    * @param newAnimal
+    *           The new animal.
+    * @return the new treatments.
+    */
+   public List<Treatment> change(List<Treatment> treatments, int toChange, SimpleAnimal newAnimal) {
+
+      // TODO Implement
+
+      return treatments;
+   }
+
+   /**
+    * Change the treatment in the specified position.
+    * 
+    * @param treatments
+    *           The actual treatments
+    * @param toChange
+    *           The position to change.
+    * @param newPackaging
+    *           The new packaging.
+    * @param newDose
+    *           The new dose.
+    * @param newReason
+    *           The new reason.
+    * @param newAnimal
+    *           The new animal.
+    * @return the new treatments.
+    */
+   public List<Treatment> change(List<Treatment> treatments, int i, Packaging newPackaging, int newDose, Reason newReason, SimpleAnimal newAnimal) {
+
+      // TODO Implement
+
+      return treatments;
    }
 }

@@ -4,6 +4,8 @@ import static com.codeborne.selenide.Condition.appear;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 
 import com.codeborne.selenide.Selenide;
@@ -16,13 +18,17 @@ import ch.treasy.uitest.data.SimpleAnimal;
 public class TreatmentPage {
 
    public void inputTreatment(Treatment treatment) {
-      inputTreatment(treatment.getPackaging(), treatment.getDose(), treatment.getReason(), treatment.getSimpleAnimal());
+      inputTreatment(treatment.getPackaging(), treatment.getDose(), treatment.getReasons(), treatment.getSimpleAnimal());
    }
    
-   public void inputTreatment(Packaging packaging, Integer dose, Reason reason, SimpleAnimal simpleAnimal) {
+   public void inputTreatment(Packaging packaging, Integer dose, List<Reason> reasons, SimpleAnimal simpleAnimal) {
 
+      if (reasons.size() != 1) {
+         throw new IllegalStateException("Reasons size must be 1");
+      }
+      
       String drugName = packaging.getDrugName();
-      String reasonName = reason.getName();
+      String reasonName = reasons.get(0).getName();
 
       $(By.xpath("(//input)[1]")).val(drugName.substring(0, 5));
       $(byText(drugName)).should(appear).click(); // Select reason
