@@ -94,6 +94,12 @@ public class TreasyPage {
       return page(TreatmentPage.class);
    }
 
+   private JournalPage openJournalPage() {
+      $(By.xpath("//*[@id='menu']")).waitUntil(appears, Duration.TEN_SECONDS.getMillis()).click();
+      $(byText("Journal")).click();
+      return page(JournalPage.class);
+   }
+
    public void treat(List<Treatment> treatments) {
       for (Treatment treatment : treatments) {
          treat(treatment);
@@ -115,9 +121,8 @@ public class TreasyPage {
     */
    public boolean check(List<Treatment> treatments) {
 
-      // TODO Implement
+      return  openJournalPage().checkElements(treatments);
 
-      return false;
    }
 
    /**
