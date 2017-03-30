@@ -1,15 +1,14 @@
 package ch.treasy.uitest.page;
 
+//import static ch.treasy.uitest.page.JournalPage.openJournalEntryPage;
 import static com.codeborne.selenide.Condition.appears;
 import static com.codeborne.selenide.Condition.disappears;
 import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.executeJavaScript;
-import static com.codeborne.selenide.Selenide.page;
-import static com.codeborne.selenide.Selenide.switchTo;
+import static com.codeborne.selenide.Selenide.*;
 
 import java.util.List;
 
+import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
 
 import com.codeborne.selenide.Selenide;
@@ -121,7 +120,7 @@ public class TreasyPage {
     */
    public boolean check(List<Treatment> treatments) {
 
-      return  openJournalPage().checkElements(treatments);
+      return  openJournalPage().checkElements(treatments );
 
    }
 
@@ -136,11 +135,11 @@ public class TreasyPage {
     *           The new packaging.
     * @return the new treatments.
     */
-   public List<Treatment> change(List<Treatment> treatments, int toChange, Packaging newPackaging) {
+   public SelenideElement change(List<Treatment> treatments, int toChange, Packaging newPackaging) {
 
-      // TODO Implement
+                JournalEntryPage.changePackaging(newPackaging);
 
-      return treatments;
+      return openJournalPage().checkNewPackaging(toChange);
    }
 
    /**
@@ -154,11 +153,11 @@ public class TreasyPage {
     *           The new dose.
     * @return the new treatments.
     */
-   public List<Treatment> change(List<Treatment> treatments, int toChange, int newDose) {
+   public SelenideElement change(List<Treatment> treatments, int toChange, int newDose) {
 
-      // TODO Implement
+      JournalEntryPage.changeDose(newDose);
 
-      return treatments;
+      return openJournalPage().checkNewDose(toChange);
    }
 
    /**
@@ -172,11 +171,11 @@ public class TreasyPage {
     *           The new reasons.
     * @return the new treatments.
     */
-   public List<Treatment> change(List<Treatment> treatments, int toChange, Reason... newReasons) {
+   public SelenideElement change(List<Treatment> treatments, int toChange, Reason... newReasons) {
 
-      // TODO Implement
+         JournalEntryPage.changeReasons(newReasons);
 
-      return treatments;
+      return openJournalPage().checkNewReason();
    }
 
    /**

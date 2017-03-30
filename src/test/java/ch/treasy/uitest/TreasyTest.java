@@ -42,14 +42,12 @@ public class TreasyTest {
       // Change packaging & check of treatment list is Ok
       Packaging newPackaging = Packaging.OXYTOCIN;
       int pos = 0;
-      page.change(treatments, pos, newPackaging);
-      assertEquals(newPackaging, treatments.get(pos).getPackaging());
+      assertEquals(newPackaging.getDrugName(), page.change(treatments, pos, newPackaging).getText());       //this part should discuss
 
       // Change dose & check if treatment list is Ok
       Integer newDose = Integer.valueOf(10);
       pos = 1;
-      page.change(treatments, pos, newDose.intValue());
-      assertEquals(newDose, treatments.get(pos).getDose());
+      assertEquals(newDose, page.change(treatments, pos, newDose.intValue()).getText());         // this part discuss too. like previous
 
       // Change one reason & check if treatment list is Ok
       Reason newReason = Reason.INFECTION;
@@ -70,7 +68,8 @@ public class TreasyTest {
       assertEquals(Packaging.OXYTOCIN, treatments.get(pos).getPackaging());
 
       // Change every aspect of the treatment
-      page.change(treatments, 5, Packaging.DINOLYTIC, 7, Reason.GEBURTSHILFE, SimpleAnimal.SUSI);
+      pos = 5;
+      page.change(treatments, pos, Packaging.DINOLYTIC, 7, Reason.GEBURTSHILFE, SimpleAnimal.SUSI);
 
       // Check if journal still corresponds with treatment list
       assertTrue(page.check(treatments));
