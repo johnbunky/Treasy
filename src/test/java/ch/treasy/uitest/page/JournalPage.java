@@ -4,7 +4,6 @@ import static ch.treasy.uitest.data.DrugSource.MEIER_MUELLER;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.navigator;
-import static com.codeborne.selenide.Selenide.page;
 
 import ch.treasy.uitest.*;
 import com.codeborne.selenide.Condition;
@@ -39,15 +38,23 @@ public class JournalPage {
         navigator.back();
     }
 
-    public SelenideElement checkNewPackaging(int toChange){
+    public static void openJournalEntryPage(int toChange){
+        $(By.xpath(".//tr[" + (toChange + 2) +"]/td[2]")).click();
+    };
+
+
+    public SelenideElement checkNewPackaging(){
         return $(By.xpath(".//tr[2]/td[4]"));
     }
 
-    public SelenideElement checkNewDose(int toChange) {
+    public SelenideElement checkNewDose() {
         return $(By.xpath(".//tr[2]/td[5]"));
     }
 
     public SelenideElement checkNewReason(){
         return $(By.xpath(".//tr[2]/td[3]"));
+    }
+
+    public SelenideElement checkNewAnimal() { return $(By.xpath(".//tr[2]/td[2]"));
     }
 }

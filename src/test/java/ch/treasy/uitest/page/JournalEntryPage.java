@@ -1,14 +1,10 @@
 package ch.treasy.uitest.page;
 
-import ch.treasy.uitest.Treatment;
 import ch.treasy.uitest.data.Packaging;
 import ch.treasy.uitest.data.Reason;
-import com.codeborne.selenide.Condition;
+import ch.treasy.uitest.data.SimpleAnimal;
 import org.openqa.selenium.By;
 
-import java.util.List;
-
-import static ch.treasy.uitest.data.DrugSource.MEIER_MUELLER;
 import static com.codeborne.selenide.Condition.appear;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
@@ -22,16 +18,15 @@ public class JournalEntryPage {
     public static void changePackaging(Packaging newPackaging){
         openEditPage();
         String drugName = newPackaging.getDrugName();
-        $(By.xpath("(//input)[2]")).val(drugName.substring(0, 5));
-        $(byText(drugName)).should(appear).click();
+        addPackaging(drugName);
         addChanges();
 
-        //$(By.xpath("(.//table[1]//td[2])[4]")).shouldHave(text(drugName)); //check changes on a JournalEntryPage
+        $(By.xpath("(.//table[1]//td[2])[4]")).shouldHave(text(drugName)); //check changes on a JournalEntryPage
     }
 
     public static void changeDose(Integer dose){
         openEditPage();
-        $(By.xpath("(//input)[1]")).val(dose.toString());
+        addDose(dose);
         addChanges();
         $(By.xpath("(.//table[1]//td[2])[3]")).shouldHave(text(dose.toString())); //check changes on a JournalEntryPage
     }
@@ -49,10 +44,41 @@ public class JournalEntryPage {
         $(By.xpath("(.//table[1]//td[2])[6]")).shouldHave(text(newReasons.toString())); //check changes on a JournalEntryPage
     }
 
+    public static void changeAnimal(SimpleAnimal newAnimal){
+        openEditPage();
+        addAnimal(newAnimal);
+        addChanges();
+        $(By.xpath("(.//table[1]//td[2])[1]")).shouldHave(text(newAnimal.getName())); //check changes on a JournalEntryPage
+    }
+
+    public static void changeAll(int toChange, Packaging newPackaging, int newDose, SimpleAnimal newAnimal, Reason... newReason) {
+        openEditPage();
+        String drugName = newPackaging.getDrugName();
+        addPackaging(drugName);
+        addDose(newDose);
+        addReason(newReason, 0);
+        addAnimal(newAnimal);
+        addChanges();
+    }
+
+    private static void addPackaging(String drugName) {
+        $(By.xpath("(//input)[2]")).val(drugName.substring(0, 5));
+        $(byText(drugName)).should(appear).click();
+    }
+
+    private static void addDose(Integer dose) {
+        $(By.xpath("(//input)[4]")).val(dose.toString());
+    }
+
     private static void addReason(Reason[] reasons, int j){
         String reasonName = reasons[j].getName();
         $(By.xpath("(//input)[" + (5 + j*2) + "]")).val(reasonName.substring(0, 3));
         $(byText(reasonName)).should(appear).click();
+    }
+
+    private static void addAnimal(SimpleAnimal newAnimal) {
+        $(By.xpath("(//input)[7]")).clear();
+        $(By.xpath("(//input)[7]")).val(newAnimal.getName());
     }
 
     private static void addChanges() {
@@ -63,5 +89,6 @@ public class JournalEntryPage {
     private static void openEditPage() {
         $(By.xpath(".//footer")).click();
     }
+
 
 }

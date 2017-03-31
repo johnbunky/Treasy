@@ -40,36 +40,34 @@ public class TreasyTest {
       assertTrue(page.check(treatments));
 
       // Change packaging & check of treatment list is Ok
-      Packaging newPackaging = Packaging.OXYTOCIN;
+      Packaging newPackaging = Packaging.DINOLYTIC;
       int pos = 0;
-      assertEquals(newPackaging.getDrugName(), page.change(treatments, pos, newPackaging).getText());       //this part should discuss
+      assertEquals(newPackaging.getDrugName(), page.change(treatments, pos, newPackaging).getText());
 
       // Change dose & check if treatment list is Ok
       Integer newDose = Integer.valueOf(10);
       pos = 1;
-      assertEquals(newDose, page.change(treatments, pos, newDose.intValue()).getText());         // this part discuss too. like previous
+      assertEquals(newDose, page.change(treatments, pos, newDose.intValue()).getText());
 
       // Change one reason & check if treatment list is Ok
       Reason newReason = Reason.INFECTION;
       pos = 2;
-      page.change(treatments, pos, newReason);
-      assertEquals(newReason, treatments.get(pos).getReasons().get(0));
+      assertEquals(newReason, page.change(treatments, pos, newReason).getText());
 
       // Change two reasons & check if treatment list is Ok
       Reason newReasonOne = Reason.GEBURTSHILFE;
       Reason newReasonTwo = Reason.DURCHFALL;
       pos = 3;
-      page.change(treatments, pos, newReasonOne, newReasonTwo);
-      assertEquals(2, treatments.get(pos).getReasons().size());
+      assertEquals(newReasonOne.getName().toString() + newReasonTwo.getName().toString(),
+              page.change(treatments, pos, newReasonOne, newReasonTwo).getText());
 
       // Change animal & check if treatment list is Ok
       pos = 4;
-      page.change(treatments, pos, SimpleAnimal.MARY);
-      assertEquals(Packaging.OXYTOCIN, treatments.get(pos).getPackaging());
+      assertEquals(SimpleAnimal.MARY.getName(), page.change(treatments, pos, SimpleAnimal.MARY).getText());
 
       // Change every aspect of the treatment
       pos = 5;
-      page.change(treatments, pos, Packaging.DINOLYTIC, 7, Reason.GEBURTSHILFE, SimpleAnimal.SUSI);
+      page.change(treatments, pos, Packaging.OXYTOCIN, 7, SimpleAnimal.SUSI, Reason.DURCHFALL);
 
       // Check if journal still corresponds with treatment list
       assertTrue(page.check(treatments));

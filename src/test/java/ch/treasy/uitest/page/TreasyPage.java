@@ -6,6 +6,7 @@ import static com.codeborne.selenide.Condition.disappears;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.codeborne.selenide.SelenideElement;
@@ -120,7 +121,7 @@ public class TreasyPage {
     */
    public boolean check(List<Treatment> treatments) {
 
-      return  openJournalPage().checkElements(treatments );
+      return  openJournalPage().checkElements(treatments);
 
    }
 
@@ -137,9 +138,10 @@ public class TreasyPage {
     */
    public SelenideElement change(List<Treatment> treatments, int toChange, Packaging newPackaging) {
 
+                JournalPage.openJournalEntryPage(toChange);
                 JournalEntryPage.changePackaging(newPackaging);
 
-      return openJournalPage().checkNewPackaging(toChange);
+      return openJournalPage().checkNewPackaging();
    }
 
    /**
@@ -155,9 +157,10 @@ public class TreasyPage {
     */
    public SelenideElement change(List<Treatment> treatments, int toChange, int newDose) {
 
+      JournalPage.openJournalEntryPage(toChange);
       JournalEntryPage.changeDose(newDose);
 
-      return openJournalPage().checkNewDose(toChange);
+      return openJournalPage().checkNewDose();
    }
 
    /**
@@ -173,6 +176,7 @@ public class TreasyPage {
     */
    public SelenideElement change(List<Treatment> treatments, int toChange, Reason... newReasons) {
 
+         JournalPage.openJournalEntryPage(toChange);
          JournalEntryPage.changeReasons(newReasons);
 
       return openJournalPage().checkNewReason();
@@ -189,11 +193,12 @@ public class TreasyPage {
     *           The new animal.
     * @return the new treatments.
     */
-   public List<Treatment> change(List<Treatment> treatments, int toChange, SimpleAnimal newAnimal) {
+   public SelenideElement change(List<Treatment> treatments, int toChange, SimpleAnimal newAnimal) {
 
-      // TODO Implement
+      JournalPage.openJournalEntryPage(toChange);
+      JournalEntryPage.changeAnimal(newAnimal);
 
-      return treatments;
+      return openJournalPage().checkNewAnimal();
    }
 
    /**
@@ -207,16 +212,20 @@ public class TreasyPage {
     *           The new packaging.
     * @param newDose
     *           The new dose.
-    * @param newReason
-    *           The new reason.
     * @param newAnimal
     *           The new animal.
+    * @param newReason
+    *           The new reason.
     * @return the new treatments.
     */
-   public List<Treatment> change(List<Treatment> treatments, int i, Packaging newPackaging, int newDose, Reason newReason, SimpleAnimal newAnimal) {
+   public boolean change(List<Treatment> treatments,
+                         int toChange, Packaging newPackaging, int newDose, SimpleAnimal newAnimal, Reason newReason) {
 
-      // TODO Implement
+      JournalPage.openJournalEntryPage(toChange);
+      JournalEntryPage.changeAll(toChange, newPackaging, newDose, newAnimal, newReason);
+      List<Treatment> testTreatments = new ArrayList<Treatment>();
+      testTreatments.add(new Treatment(newPackaging, newDose, newReason, newAnimal));
 
-      return treatments;
+      return openJournalPage().checkElements(testTreatments);
    }
 }
