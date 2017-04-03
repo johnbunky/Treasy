@@ -47,19 +47,19 @@ public class TreasyTest {
       // Change dose & check if treatment list is Ok
       Integer newDose = Integer.valueOf(10);
       pos = 1;
-      assertEquals(newDose, page.change(treatments, pos, newDose.intValue()).getText());
+      assertEquals(newDose.toString(), page.change(treatments, pos, newDose.intValue()).getText().substring(0, 2));
 
       // Change one reason & check if treatment list is Ok
       Reason newReason = Reason.INFECTION;
       pos = 2;
-      assertEquals(newReason, page.change(treatments, pos, newReason).getText());
+      assertEquals(newReason.getName(), page.change(treatments, pos, newReason).getText());
 
       // Change two reasons & check if treatment list is Ok
       Reason newReasonOne = Reason.GEBURTSHILFE;
       Reason newReasonTwo = Reason.DURCHFALL;
       pos = 3;
-      assertEquals(newReasonOne.getName().toString() + newReasonTwo.getName().toString(),
-              page.change(treatments, pos, newReasonOne, newReasonTwo).getText());
+      assertEquals(newReasonTwo.getName() + "\n" + newReasonOne.getName(),
+             page.change(treatments, pos, newReasonOne, newReasonTwo).getText());
 
       // Change animal & check if treatment list is Ok
       pos = 4;
@@ -67,10 +67,10 @@ public class TreasyTest {
 
       // Change every aspect of the treatment
       pos = 5;
-      page.change(treatments, pos, Packaging.OXYTOCIN, 7, SimpleAnimal.SUSI, Reason.DURCHFALL);
 
       // Check if journal still corresponds with treatment list
-      assertTrue(page.check(treatments));
+      assertTrue(page.change(treatments, pos, Packaging.OXYTOCIN, 7, SimpleAnimal.SUSI, Reason.DURCHFALL));
+
    }
 
    private static List<Treatment> getTreatments(List<Stock> stock) {

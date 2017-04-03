@@ -1,12 +1,11 @@
 package ch.treasy.uitest.page;
 
-//import static ch.treasy.uitest.page.JournalPage.openJournalEntryPage;
 import static com.codeborne.selenide.Condition.appears;
 import static com.codeborne.selenide.Condition.disappears;
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.codeborne.selenide.SelenideElement;
@@ -89,12 +88,14 @@ public class TreasyPage {
    }
 
    private TreatmentPage openTreatmentPage() {
+      sleep(400);
       $(By.xpath("//*[@id='menu']")).waitUntil(appears, Duration.TEN_SECONDS.getMillis()).click();
       $(byText("Behandeln")).click();
       return page(TreatmentPage.class);
    }
 
    private JournalPage openJournalPage() {
+      sleep(200);
       $(By.xpath("//*[@id='menu']")).waitUntil(appears, Duration.TEN_SECONDS.getMillis()).click();
       $(byText("Journal")).click();
       return page(JournalPage.class);
@@ -121,8 +122,9 @@ public class TreasyPage {
     */
    public boolean check(List<Treatment> treatments) {
 
-      return  openJournalPage().checkElements(treatments);
+      openJournalPage().checkElements(treatments);
 
+      return  true;
    }
 
    /**
@@ -138,8 +140,8 @@ public class TreasyPage {
     */
    public SelenideElement change(List<Treatment> treatments, int toChange, Packaging newPackaging) {
 
-                JournalPage.openJournalEntryPage(toChange);
-                JournalEntryPage.changePackaging(newPackaging);
+      JournalPage.openJournalEntryPage(toChange);
+      JournalEntryPage.changePackaging(newPackaging);
 
       return openJournalPage().checkNewPackaging();
    }
@@ -176,8 +178,8 @@ public class TreasyPage {
     */
    public SelenideElement change(List<Treatment> treatments, int toChange, Reason... newReasons) {
 
-         JournalPage.openJournalEntryPage(toChange);
-         JournalEntryPage.changeReasons(newReasons);
+      JournalPage.openJournalEntryPage(toChange);
+      JournalEntryPage.changeReasons(newReasons);
 
       return openJournalPage().checkNewReason();
    }
@@ -218,14 +220,17 @@ public class TreasyPage {
     *           The new reason.
     * @return the new treatments.
     */
-   public boolean change(List<Treatment> treatments,
-                         int toChange, Packaging newPackaging, int newDose, SimpleAnimal newAnimal, Reason newReason) {
+   public boolean change(List<Treatment> treatments, int toChange, Packaging newPackaging,
+                         int newDose, SimpleAnimal newAnimal, Reason newReason) {
 
       JournalPage.openJournalEntryPage(toChange);
       JournalEntryPage.changeAll(toChange, newPackaging, newDose, newAnimal, newReason);
-      List<Treatment> testTreatments = new ArrayList<Treatment>();
-      testTreatments.add(new Treatment(newPackaging, newDose, newReason, newAnimal));
 
-      return openJournalPage().checkElements(testTreatments);
+      openJournalPage().checkNewPackaging().shouldHave(text(newPackaging.getDrugName()));
+      openJournalPage().checkNewAnimal().shouldHave(text(newAnimal.getName()));
+      openJournalPage().checkNewDose().shouldHave(text(String.valueOf(newDose)));
+      openJournalPage().checkNewReason().shouldHave(text(newReason.getName()));
+
+      return true;
    }
 }

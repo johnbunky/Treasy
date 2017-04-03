@@ -3,6 +3,7 @@ package ch.treasy.uitest.page;
 import ch.treasy.uitest.data.Packaging;
 import ch.treasy.uitest.data.Reason;
 import ch.treasy.uitest.data.SimpleAnimal;
+import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Condition.appear;
@@ -20,35 +21,39 @@ public class JournalEntryPage {
         String drugName = newPackaging.getDrugName();
         addPackaging(drugName);
         addChanges();
-
-        $(By.xpath("(.//table[1]//td[2])[4]")).shouldHave(text(drugName)); //check changes on a JournalEntryPage
+        //$(By.xpath("(.//td[2])[4]")).shouldHave(text(drugName)); //check changes on a JournalEntryPage
     }
 
     public static void changeDose(Integer dose){
         openEditPage();
         addDose(dose);
         addChanges();
-        $(By.xpath("(.//table[1]//td[2])[3]")).shouldHave(text(dose.toString())); //check changes on a JournalEntryPage
+        $(By.xpath("(.//td[2])[3]")).shouldHave(text(dose.toString())); //check changes on a JournalEntryPage
     }
 
-    public static void changeReasons(Reason[] newReasons){
+    public static void changeReasons(Reason... newReasons){
         openEditPage();
-        addReason(newReasons, 0);
-        if(newReasons.length > 1){
-            for(int j = 1; j <= newReasons.length; j++ ){
+        addReason(0, newReasons);
+        if(newReasons.length > 1) {
+            for (int j = 1; j < newReasons.length; j++) {
                 $(By.xpath(".//*[@class='input plus']")).click();
-                addReason(newReasons, j);
+                addReason(j, newReasons);
             }
         }
         addChanges();
-        $(By.xpath("(.//table[1]//td[2])[6]")).shouldHave(text(newReasons.toString())); //check changes on a JournalEntryPage
+        if (newReasons.length == 1) {
+            $(By.xpath("(.//td[2])[6]")).shouldHave(text(newReasons[0].getName())); //check changes on a JournalEntryPage
+        }
+        if(newReasons.length > 1) {
+            $(By.xpath("(.//td[2])[6]")).shouldHave(text(newReasons[1].getName() + "\n" + newReasons[0].getName()));
+        }
     }
 
     public static void changeAnimal(SimpleAnimal newAnimal){
         openEditPage();
         addAnimal(newAnimal);
         addChanges();
-        $(By.xpath("(.//table[1]//td[2])[1]")).shouldHave(text(newAnimal.getName())); //check changes on a JournalEntryPage
+        $(By.xpath("(.//td[2])[1]")).shouldHave(text(newAnimal.getName())); //check changes on a JournalEntryPage
     }
 
     public static void changeAll(int toChange, Packaging newPackaging, int newDose, SimpleAnimal newAnimal, Reason... newReason) {
@@ -56,8 +61,9 @@ public class JournalEntryPage {
         String drugName = newPackaging.getDrugName();
         addPackaging(drugName);
         addDose(newDose);
-        addReason(newReason, 0);
+        addReason(0, newReason);
         addAnimal(newAnimal);
+        addAnimalType(newAnimal);
         addChanges();
     }
 
@@ -67,18 +73,24 @@ public class JournalEntryPage {
     }
 
     private static void addDose(Integer dose) {
-        $(By.xpath("(//input)[4]")).val(dose.toString());
+        $(By.xpath("//*[@name=\"treatment.dose\"]")).val(dose.toString());
     }
 
-    private static void addReason(Reason[] reasons, int j){
+    private static void addReason(int j, Reason... reasons){
         String reasonName = reasons[j].getName();
-        $(By.xpath("(//input)[" + (5 + j*2) + "]")).val(reasonName.substring(0, 3));
+        $(By.xpath("(//*[@placeholder=\"Grund auswählen\"]//input[1])[" + (j + 1) +"]")).val(reasonName.substring(0, 3));
         $(byText(reasonName)).should(appear).click();
     }
 
     private static void addAnimal(SimpleAnimal newAnimal) {
         $(By.xpath("(//input)[7]")).clear();
         $(By.xpath("(//input)[7]")).val(newAnimal.getName());
+    }
+
+    private static void addAnimalType(SimpleAnimal newAnimal) {
+        $(By.xpath("(//*[@placeholder=\"Tierart wählen\"])[2]")).click();
+        Selenide.sleep(100);
+        $(byText(newAnimal.getType().getName())).should(appear).click();
     }
 
     private static void addChanges() {
