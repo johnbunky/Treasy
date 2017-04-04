@@ -101,5 +101,5 @@ public class JournalEntryPage {
     private static void openEditPage() {
         $(By.xpath(".//footer")).click();
     }
-    
+
 }
