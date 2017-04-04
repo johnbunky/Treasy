@@ -18,13 +18,13 @@ import java.util.List;
  */
 public class JournalPage {
     public void checkElements(List<Treatment> treatments){
-            for( int i = treatments.size()-1; i <= 0; i--  ){
+            for( int i = treatments.size()-1; i >= 0; i--  ){
                 $(By.xpath(".//tr[" + (7-i) + "]/td[2]")).shouldHave(text(treatments.get(i).getSimpleAnimal().getName()));
                 $(By.xpath(".//tr[" + (7-i) + "]/td[3]")).shouldHave(text(String.valueOf(treatments.get(i).getReasons().get(0).getName())));
                 $(By.xpath(".//tr[" + (7-i) + "]/td[4]")).shouldHave(text(treatments.get(i).getPackaging().getDrugName()));
                 $(By.xpath(".//tr[" + (7-i) + "]/td[5]")).shouldHave(text(String.valueOf(treatments.get(i).getDose())));
-                $(By.xpath(".//tr[" + (7-i) + "]/td[7]")).shouldHave(Condition.attribute(MEIER_MUELLER.getName())).click();
-                checkDetails(treatments, i); // checking treatment details
+                $(By.xpath(".//tr[" + (7-i) + "]/td[7]")).shouldHave(text(MEIER_MUELLER.getName())).click();
+                checkDetails(treatments, i); // Checking treatment details
             }
     }
 
@@ -32,7 +32,7 @@ public class JournalPage {
         $(By.xpath("(.//td[2])[1]")).shouldHave(text(treatments.get(i).getSimpleAnimal().getName()));
         $(By.xpath("(.//td[2])[3]")).shouldHave(text(String.valueOf(treatments.get(i).getDose())));
         $(By.xpath("(.//td[2])[4]")).shouldHave(text(treatments.get(i).getPackaging().getDrugName()));
-        $(By.xpath("(.//td[2])[5]")).shouldHave(Condition.attribute(MEIER_MUELLER.getName()));
+        $(By.xpath("(.//td[2])[5]")).shouldHave(text(MEIER_MUELLER.getName()));
         $(By.xpath("(.//td[2])[6]")).shouldHave(text(String.valueOf(treatments.get(i).getReasons().get(0).getName())));
         navigator.back();
     }

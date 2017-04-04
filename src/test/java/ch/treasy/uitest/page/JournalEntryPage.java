@@ -21,14 +21,14 @@ public class JournalEntryPage {
         String drugName = newPackaging.getDrugName();
         addPackaging(drugName);
         addChanges();
-        //$(By.xpath("(.//td[2])[4]")).shouldHave(text(drugName)); //check changes on a JournalEntryPage
+        $(By.xpath("(.//td[2])[4]")).shouldHave(text(drugName)); // Check changes on a JournalEntryPage
     }
 
     public static void changeDose(Integer dose){
         openEditPage();
         addDose(dose);
         addChanges();
-        $(By.xpath("(.//td[2])[3]")).shouldHave(text(dose.toString())); //check changes on a JournalEntryPage
+        $(By.xpath("(.//td[2])[3]")).shouldHave(text(dose.toString())); // Check changes on a JournalEntryPage
     }
 
     public static void changeReasons(Reason... newReasons){
@@ -42,7 +42,7 @@ public class JournalEntryPage {
         }
         addChanges();
         if (newReasons.length == 1) {
-            $(By.xpath("(.//td[2])[6]")).shouldHave(text(newReasons[0].getName())); //check changes on a JournalEntryPage
+            $(By.xpath("(.//td[2])[6]")).shouldHave(text(newReasons[0].getName())); // Check changes on a JournalEntryPage
         }
         if(newReasons.length > 1) {
             $(By.xpath("(.//td[2])[6]")).shouldHave(text(newReasons[1].getName() + "\n" + newReasons[0].getName()));
@@ -53,7 +53,7 @@ public class JournalEntryPage {
         openEditPage();
         addAnimal(newAnimal);
         addChanges();
-        $(By.xpath("(.//td[2])[1]")).shouldHave(text(newAnimal.getName())); //check changes on a JournalEntryPage
+        $(By.xpath("(.//td[2])[1]")).shouldHave(text(newAnimal.getName())); // Check changes on a JournalEntryPage
     }
 
     public static void changeAll(int toChange, Packaging newPackaging, int newDose, SimpleAnimal newAnimal, Reason... newReason) {
@@ -101,6 +101,5 @@ public class JournalEntryPage {
     private static void openEditPage() {
         $(By.xpath(".//footer")).click();
     }
-
-
+    
 }

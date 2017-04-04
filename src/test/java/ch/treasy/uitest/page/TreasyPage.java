@@ -143,6 +143,9 @@ public class TreasyPage {
       JournalPage.openJournalEntryPage(toChange);
       JournalEntryPage.changePackaging(newPackaging);
 
+      treatments.set(5-toChange, new Treatment(newPackaging, Integer.valueOf(3), Reason.INFECTION, SimpleAnimal.JOE));
+      openJournalPage().checkElements(treatments); // Check all treatments
+
       return openJournalPage().checkNewPackaging();
    }
 
@@ -162,8 +165,9 @@ public class TreasyPage {
       JournalPage.openJournalEntryPage(toChange);
       JournalEntryPage.changeDose(newDose);
 
-      return openJournalPage().checkNewDose();
-   }
+
+
+      return openJournalPage().checkNewDose();   }
 
    /**
     * Change the packaging of the treatment in the specified position.
