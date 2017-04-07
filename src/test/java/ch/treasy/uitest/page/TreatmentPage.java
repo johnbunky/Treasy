@@ -40,7 +40,7 @@ class TreatmentPage {
       
       $(By.xpath("(//input)[6]")).val(simpleAnimal.getName());
       $(By.xpath("(//input)[7]")).click();
-      // Add a little delay otherwise the animal type will randomly not be set 
+      // Add a little delay otherwise the animal type will randomly not be set.
       Selenide.sleep(100);
       $(byText(simpleAnimal.getType().getName())).should(appear).click(); // Select animal type
 
