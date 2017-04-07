@@ -19,8 +19,8 @@ import ch.treasy.uitest.page.TreasyPage;
 
 public class TreasyTest {
 
-   static List<Stock> stock = getStock();
-   static List<Treatment> treatments = getTreatments(stock);
+   private static List<Stock> stock = getStock();
+   private static List<Treatment> treatments = getTreatments(stock);
 
    @BeforeClass
    public static void setup() {
@@ -45,9 +45,9 @@ public class TreasyTest {
       assertEquals(newPackaging.getDrugName(), page.change(treatments, pos, newPackaging).getText());
 
       // Change dose & check if treatment list is Ok
-      Integer newDose = Integer.valueOf(10);
+      Integer newDose = 10;
       pos = 1;
-      assertEquals(newDose.toString(), page.change(treatments, pos, newDose.intValue()).getText().substring(0, 2));
+      assertEquals(newDose.toString(), page.change(treatments, pos, newDose).getText().substring(0, 2));
 
       // Change one reason & check if treatment list is Ok
       Reason newReason = Reason.INFECTION;
@@ -74,20 +74,20 @@ public class TreasyTest {
    }
 
    private static List<Treatment> getTreatments(List<Stock> stock) {
-      List<Treatment> treatments = new ArrayList<Treatment>();
-      treatments.add(new Treatment(Packaging.DINOLYTIC, Integer.valueOf(2), Reason.GEBURTSHILFE, SimpleAnimal.MARY));
-      treatments.add(new Treatment(Packaging.DINOLYTIC, Integer.valueOf(5), Reason.INFECTION, SimpleAnimal.SUSI));
-      treatments.add(new Treatment(Packaging.OXYTOCIN, Integer.valueOf(2), Reason.DURCHFALL, SimpleAnimal.JOE));
-      treatments.add(new Treatment(Packaging.OXYTOCIN, Integer.valueOf(3), Reason.DURCHFALL, SimpleAnimal.PETER));
-      treatments.add(new Treatment(Packaging.OXYTOCIN, Integer.valueOf(2), Reason.GEBURTSHILFE, SimpleAnimal.SUSI));
-      treatments.add(new Treatment(Packaging.OXYTOCIN, Integer.valueOf(3), Reason.INFECTION, SimpleAnimal.JOE));
+      List<Treatment> treatments = new ArrayList<>();
+      treatments.add(new Treatment(Packaging.DINOLYTIC, 2, Reason.GEBURTSHILFE, SimpleAnimal.MARY));
+      treatments.add(new Treatment(Packaging.DINOLYTIC, 5, Reason.INFECTION, SimpleAnimal.SUSI));
+      treatments.add(new Treatment(Packaging.OXYTOCIN, 2, Reason.DURCHFALL, SimpleAnimal.JOE));
+      treatments.add(new Treatment(Packaging.OXYTOCIN, 3, Reason.DURCHFALL, SimpleAnimal.PETER));
+      treatments.add(new Treatment(Packaging.OXYTOCIN, 2, Reason.GEBURTSHILFE, SimpleAnimal.SUSI));
+      treatments.add(new Treatment(Packaging.OXYTOCIN, 3, Reason.INFECTION, SimpleAnimal.JOE));
       return treatments;
    }
 
    private static List<Stock> getStock() {
-      List<Stock> stock = new ArrayList<Stock>();
+      List<Stock> stock = new ArrayList<>();
       stock.add(new Stock(Packaging.DINOLYTIC, null));
-      stock.add(new Stock(Packaging.OXYTOCIN, Integer.valueOf(75)));
+      stock.add(new Stock(Packaging.OXYTOCIN, 75));
       return stock;
    }
 }

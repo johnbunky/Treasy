@@ -15,13 +15,13 @@ import ch.treasy.uitest.data.Packaging;
 import ch.treasy.uitest.data.Reason;
 import ch.treasy.uitest.data.SimpleAnimal;
 
-public class TreatmentPage {
+class TreatmentPage {
 
-   public void inputTreatment(Treatment treatment) {
+   void inputTreatment(Treatment treatment) {
       inputTreatment(treatment.getPackaging(), treatment.getDose(), treatment.getReasons(), treatment.getSimpleAnimal());
    }
    
-   public void inputTreatment(Packaging packaging, Integer dose, List<Reason> reasons, SimpleAnimal simpleAnimal) {
+   private void inputTreatment(Packaging packaging, Integer dose, List<Reason> reasons, SimpleAnimal simpleAnimal) {
 
       if (reasons.size() != 1) {
          throw new IllegalStateException("Reasons size must be 1");
