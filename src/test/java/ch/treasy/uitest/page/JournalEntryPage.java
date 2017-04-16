@@ -56,7 +56,7 @@ public class JournalEntryPage {
         $(By.xpath("(.//td[2])[1]")).shouldHave(text(newAnimal.getName())); // Check changes on a JournalEntryPage
     }
 
-    public static void changeAll(int toChange, Packaging newPackaging, int newDose, SimpleAnimal newAnimal, Reason... newReason) {
+    public static void changeAll(int toChange, Packaging newPackaging, Integer newDose, SimpleAnimal newAnimal, Reason... newReason) {
         openEditPage();
         String drugName = newPackaging.getDrugName();
         addPackaging(drugName);

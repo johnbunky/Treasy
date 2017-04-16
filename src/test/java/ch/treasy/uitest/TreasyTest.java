@@ -47,7 +47,7 @@ public class TreasyTest {
       // Change dose & check if treatment list is Ok
       Integer newDose = Integer.valueOf(10);
       pos = 1;
-      assertEquals(newDose.toString(), page.change(treatments, pos, newDose.intValue()).getText().substring(0, 2));
+      assertEquals(newDose.toString(), page.change(treatments, pos, newDose).getText().substring(0, 2));
 
       // Change one reason & check if treatment list is Ok
       Reason newReason = Reason.INFECTION;
@@ -69,7 +69,7 @@ public class TreasyTest {
       pos = 5;
 
       // Check if journal still corresponds with treatment list
-      assertTrue(page.change(treatments, pos, Packaging.OXYTOCIN, 7, SimpleAnimal.SUSI, Reason.DURCHFALL));
+      assertTrue(page.change(treatments, pos, Packaging.OXYTOCIN, Integer.valueOf(7), SimpleAnimal.SUSI, Reason.DURCHFALL));
 
    }
 

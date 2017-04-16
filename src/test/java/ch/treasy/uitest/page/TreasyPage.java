@@ -160,7 +160,7 @@ public class TreasyPage {
     *           The new dose.
     * @return the new treatments.
     */
-   public SelenideElement change(List<Treatment> treatments, int toChange, int newDose) {
+   public SelenideElement change(List<Treatment> treatments, int toChange, Integer newDose) {
 
       JournalPage.openJournalEntryPage(toChange);
       JournalEntryPage.changeDose(newDose);
@@ -225,7 +225,7 @@ public class TreasyPage {
     * @return the new treatments.
     */
    public boolean change(List<Treatment> treatments, int toChange, Packaging newPackaging,
-                         int newDose, SimpleAnimal newAnimal, Reason newReason) {
+                         Integer newDose, SimpleAnimal newAnimal, Reason newReason) {
 
       JournalPage.openJournalEntryPage(toChange);
       JournalEntryPage.changeAll(toChange, newPackaging, newDose, newAnimal, newReason);
