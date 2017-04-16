@@ -11,12 +11,10 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 
-/**
- * Created by johnbunky on 27.03.17.
- */
-public class JournalEntryPage {
 
-    public static void changePackaging(Packaging newPackaging){
+class JournalEntryPage {
+
+    static void changePackaging(Packaging newPackaging){
         openEditPage();
         String drugName = newPackaging.getDrugName();
         addPackaging(drugName);
@@ -24,14 +22,14 @@ public class JournalEntryPage {
         $(By.xpath("(.//td[2])[4]")).shouldHave(text(drugName)); // Check changes on a JournalEntryPage
     }
 
-    public static void changeDose(Integer dose){
+    static void changeDose(Integer dose){
         openEditPage();
         addDose(dose);
         addChanges();
         $(By.xpath("(.//td[2])[3]")).shouldHave(text(dose.toString())); // Check changes on a JournalEntryPage
     }
 
-    public static void changeReasons(Reason... newReasons){
+    static void changeReasons(Reason... newReasons){
         openEditPage();
         addReason(0, newReasons);
         if(newReasons.length > 1) {
@@ -49,7 +47,7 @@ public class JournalEntryPage {
         }
     }
 
-    public static void changeAnimal(SimpleAnimal newAnimal){
+    static void changeAnimal(SimpleAnimal newAnimal){
         openEditPage();
         addAnimal(newAnimal);
         addChanges();

@@ -19,8 +19,8 @@ import ch.treasy.uitest.page.TreasyPage;
 
 public class TreasyTest {
 
-   static List<Stock> stock = getStock();
-   static List<Treatment> treatments = getTreatments(stock);
+   private static List<Stock> stock = getStock();
+   private static List<Treatment> treatments = getTreatments(stock);
 
    @BeforeClass
    public static void setup() {
@@ -74,7 +74,7 @@ public class TreasyTest {
    }
 
    private static List<Treatment> getTreatments(List<Stock> stock) {
-      List<Treatment> treatments = new ArrayList<Treatment>();
+      List<Treatment> treatments = new ArrayList<>();
       treatments.add(new Treatment(Packaging.DINOLYTIC, Integer.valueOf(2), Reason.GEBURTSHILFE, SimpleAnimal.MARY));
       treatments.add(new Treatment(Packaging.DINOLYTIC, Integer.valueOf(5), Reason.INFECTION, SimpleAnimal.SUSI));
       treatments.add(new Treatment(Packaging.OXYTOCIN, Integer.valueOf(2), Reason.DURCHFALL, SimpleAnimal.JOE));
@@ -85,7 +85,7 @@ public class TreasyTest {
    }
 
    private static List<Stock> getStock() {
-      List<Stock> stock = new ArrayList<Stock>();
+      List<Stock> stock = new ArrayList<>();
       stock.add(new Stock(Packaging.DINOLYTIC, null));
       stock.add(new Stock(Packaging.OXYTOCIN, Integer.valueOf(75)));
       return stock;

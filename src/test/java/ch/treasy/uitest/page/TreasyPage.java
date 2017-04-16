@@ -5,6 +5,7 @@ import static com.codeborne.selenide.Condition.disappears;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
+import static java.lang.Integer.valueOf;
 
 import java.util.List;
 
@@ -60,12 +61,12 @@ public class TreasyPage {
       $(byText("Start")).waitUntil(appears, Duration.TEN_SECONDS.getMillis());
    }
 
-   public TreasyPage treat(Treatment treatment) {
+   private TreasyPage treat(Treatment treatment) {
       openTreatmentPage().inputTreatment(treatment);
       return this;
    }
 
-   public TreasyPage registerStock(Stock stock) {
+   private TreasyPage registerStock(Stock stock) {
       openStockPage().registerStock(stock);
       return this;
    }
@@ -143,7 +144,7 @@ public class TreasyPage {
       JournalPage.openJournalEntryPage(toChange);
       JournalEntryPage.changePackaging(newPackaging);
 
-      treatments.set(5-toChange, new Treatment(newPackaging, Integer.valueOf(3), Reason.INFECTION, SimpleAnimal.JOE));
+      treatments.set(5-toChange, new Treatment(newPackaging, valueOf(3), Reason.INFECTION, SimpleAnimal.JOE));
       openJournalPage().checkElements(treatments); // Check all treatments
 
       return openJournalPage().checkNewPackaging();
